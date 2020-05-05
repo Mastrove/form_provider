@@ -117,7 +117,7 @@ packages:
     source: hosted
     version: "2.4.0"
   provider:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: provider
       url: "https://pub.dartlang.org"
@@ -185,7 +185,7 @@ packages:
     source: hosted
     version: "1.1.6"
   validators:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: validators
       url: "https://pub.dartlang.org"
