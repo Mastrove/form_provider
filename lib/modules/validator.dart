@@ -44,11 +44,14 @@ TValidator isNumericValidator([String error, String label]) {
   };
 }
 
+typedef TCustomValidatorCallback = String Function(dynamic value, Map<String, dynamic> data);
+
 class Validator {
   List<TValidator> validators = [];
   String _label = 'field';
-  bool _isOptional;
+  bool _isOptional = true;
   String _isRequiredError;
+  Map<String, dynamic> values = {};
 
   label(String label) {
     _label = label;
@@ -83,6 +86,12 @@ class Validator {
     _isRequiredError = error;
   }
 
+  custom(TCustomValidatorCallback validator) {
+    validators.add((dynamic value) {
+      return validator(value, values);
+    });
+  }
+
   Validator get validator => this;
 
   TValidator validate() {
@@ -108,6 +117,7 @@ SchemaValidator schemaValidator(Map<String, Validator> schema) {
     final Map<String, String> errorMap = {};
 
     schema.forEach((key, validator) {
+      validator.values = data;
       final field = data[key];
       final error = (validator..label(key)).validate()(field);
       if (error != null) errorMap[key] = error;
